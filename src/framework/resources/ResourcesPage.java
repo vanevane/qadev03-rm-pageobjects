@@ -1,6 +1,7 @@
 package framework.resources;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
 import org.bouncycastle.jcajce.provider.asymmetric.util.ExtendedInvalidKeySpecException;
@@ -13,89 +14,160 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import framework.browser.BrowserManager;
 import framework.common.NavigationBarPage;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
 public class ResourcesPage extends NavigationBarPage{
+
+	WebElement element;
 	
+	/**
+	 * Method to select the Add tab
+	 * @return
+	 */
 	public AddResourcesPage AddResource()
 	{
 		WaitByXPath("//div/div/button");
-//		for (int second = 0;; second++) {
-//	    	if (second >= 60) fail("timeout");
-//	    	try { if (isElementPresent(By.xpath("//div/div/button"))) break; } catch (Exception e) {}
-////	    	Thread.sleep(1000);
-//	    }
 		
-		WebElement add = BrowserManager.getInstance().getBrowser().findElement(By.xpath("//div/div/button"));
-		add.click();
-//		nameR.sendKeys(name);
-//		
-//		WebElement nameR = BrowserManager.getInstance().getBrowser().findElement(By.id("j_id_v:userName"));
-//		nameR.sendKeys(name);
-//		driver.findElement(By.xpath("//div/div/button")).click();
-//	    driver.findElement(By.xpath("(//input[@type='text'])[3]")).clear();
-//	    driver.findElement(By.xpath("(//input[@type='text'])[3]")).sendKeys("newResource");
-//	    driver.findElement(By.xpath("(//input[@type='text'])[4]")).clear();
-//	    driver.findElement(By.xpath("(//input[@type='text'])[4]")).sendKeys("newResource");
-//	    driver.findElement(By.cssSelector("button.info")).click();
+		WebElement element = BrowserManager.getInstance().getBrowser().findElement(By.xpath("//div/div/button"));
+		element.click();
 	    
 		return new AddResourcesPage();
 	}
 	
-	private boolean isElementPresent(By by) {
-	    try {
-	    	BrowserManager.getInstance().getBrowser().findElement(by);
-//	      driver.findElement(by);
-	      return true;
-	    } catch (NoSuchElementException e) {
-	      return false;
-	    }
-	  }
+	/**
+	 * Method to select the checkbox in the resources table
+	 * @return
+	 */
+	public ResourcesPage SelectResource()
+	{
+		WaitByCss("input.ngSelectionCheckbox");
+		
+		WebElement checkbox;
+		List<WebElement> list = GetListResources();
+		
+		checkbox = list.get(list.size()-1).findElement(By.cssSelector("input.ngSelectionCheckbox"));
+		checkbox.click();
+		
+		return this;
+	}
+	
+	/**
+	 * Method to select the Remove tab
+	 * @return
+	 */
+	public DeleteResourcesPage RemoveResource()
+	{
+		element = BrowserManager
+				.getInstance()
+				.getBrowser()
+				.findElement(By.id("btnRemove"));
+		element.click();
+		
+		return new DeleteResourcesPage();
+	}
+	
+	/**
+	 * Method to get a list of the resources
+	 * @return
+	 */
+	public List<WebElement> GetListResources()
+	{
+		WebElement element2;
+		WebElement element3;
+//		WebElement element4;
+		
+		element = BrowserManager
+				.getInstance()
+				.getBrowser()
+				.findElement(By.id("resourcesGrid"));//		
+		
+		element2 = element.findElement(By.xpath("div[2]"));
+//		System.out.println(element2.getText());
+//		System.out.println(element2.);
+//		System.out.println("--------------------------");
+//		
+		element3 = element2.findElement(By.tagName("div"));
+//		System.out.println(element3.getText());
+//		System.out.println("--------------------------");
+		
+		List<WebElement> listEven = element3.findElements(By.cssSelector("div.ng-scope.ngRow.even"));
+		List<WebElement> listOdd = element3.findElements(By.cssSelector("div.ng-scope.ngRow.odd"));
+		
+		if (listEven.size() > listOdd.size()) {
+			return listEven;
+		}
+		else if(listEven.size() == listOdd.size()){
+			return listOdd;
+		}
+		return null;
+		
+	}
+
 	
 	/**
 	 * Verify section
 	 */
 
 	
-	public ResourcesPage VerifyResourceWasCreated()
+	public ResourcesPage VerifyResourceWasCreated(String expName, String expDisplayName)
 	{
-//	WaitByXPath(path);
-		
-//		for (int second = 0;; second++) {
-//	    	if (second >= 60) fail("timeout");
-//	    	try { if (isElementPresent(By.linkText("Conference Rooms"))) break; } catch (Exception e) {}
-////	    	Thread.sleep(1000);
-//	    }
-		
+		WebElement nameElement;
+		WebElement displayNameElement;
+//		
 		SelectRoomsOption();
 		SelectResourcesOption();
 		
-//		WebElement menu = BrowserManager.getInstance().getBrowser().findElement(By.linkText("Conference Rooms"));
-//		menu.click();
-//		BrowserManager.getInstance().getBrowser().manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-//		driver.manage().timeouts().pageLoadTimeout(100, SECONDS);
-//		WebDriverWait wait = new WebDriverWait(BrowserManager.getInstance().getBrowser(), 10);
-//		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("j_id_v:ci")));
+		List<WebElement> list = GetListResources();
 		
-//		menu = BrowserManager.getInstance().getBrowser().findElement(By.linkText("Resources"));
-//		menu.click();
+//		for (WebElement el : list) {
+//		element4 = el.findElement(By.cssSelector("div.ngCell.centeredColumn.col2.colt2"));
+//		System.out.println(element4.getText());
+//	}
+		nameElement = list.get(list.size()-1).findElement(By.cssSelector("div.ngCell.centeredColumn.col2.colt2"));
+		String name = nameElement.getText().replaceAll("\\s","");
 		
-		String name = BrowserManager
-				.getInstance()
-				.getBrowser()
-				.findElement(By.cssSelector("div.ngCell.centeredColumn.col2.colt2"))
-				.getText()
-				.replaceAll("\\s","");
+		displayNameElement = list.get(list.size()-1).findElement(By.cssSelector("div.ngCell.centeredColumn.col3.colt3"));
+		String displayName = displayNameElement.getText().replaceAll("\\s","");
 		
-		System.out.println(name);
-		System.out.println("newResource");
-		
-		assertEquals("newResource", name);
+		System.out.println(nameElement);
+		System.out.println(displayNameElement);
+		assertEquals(expName, name);
+		assertEquals(expDisplayName, displayName);
 		
 		return this;
 	}
 	
+	public ResourcesPage VerifyResourceWasDeleted(String expName, String expDisplayName)
+	{
+		List<WebElement> list = GetListResources();
+		
+		WebElement nameElement;
+		WebElement displayNameElement;
+		
+		SelectRoomsOption();
+		SelectResourcesOption();
+		
+		nameElement = list.get(list.size()-1).findElement(By.cssSelector("div.ngCell.centeredColumn.col2.colt2"));
+		String name = nameElement.getText().replaceAll("\\s","");
+		
+		displayNameElement = list.get(list.size()-1).findElement(By.cssSelector("div.ngCell.centeredColumn.col3.colt3"));
+		String displayName = displayNameElement.getText().replaceAll("\\s","");
+		
+		System.out.println(nameElement);
+		System.out.println(displayNameElement);
+//		System.out.println("newResource");
+		assertNotEquals(expName, name);
+		assertNotEquals(expDisplayName, displayName);
+		
+		return this;
+	}
+	
+	/**
+	 * Wait by path
+	 * @param path
+	 */
 	private void WaitByXPath(String path)
 	{
 		WebDriverWait wait = new WebDriverWait(BrowserManager
@@ -106,5 +178,33 @@ public class ResourcesPage extends NavigationBarPage{
 				.presenceOfElementLocated(By.xpath(path)));
 		
 //		BrowserManager.getInstance().getBrowser().manage().timeouts().pageLoadTimeout(3, TimeUnit.SECONDS);
+	}
+	
+	/**
+	 * Wait by css
+	 * @param path
+	 */
+	private void WaitByCss(String path)
+	{
+		WebDriverWait wait = new WebDriverWait(BrowserManager
+				.getInstance()
+				.getBrowser(), 5);
+		
+		wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.cssSelector(path)));
+	}
+	
+	/**
+	 * Wait by id
+	 * @param id
+	 */
+	private void WaitById(String id)
+	{
+		WebDriverWait wait = new WebDriverWait(BrowserManager
+				.getInstance()
+				.getBrowser(), 5);
+		
+		wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.id(id)));
 	}
 }

@@ -20,8 +20,11 @@ public class ResourcesTest {
 		.AddResource()
 		.setName(name)
 		.setDisplayName(displayName)
-		.CreateResource()
-		.VerifyResourceWasCreated();
+		.Save()
+		.VerifyResourceWasCreated(name, displayName)
+		.SelectResource()
+		.RemoveResource()
+		.Remove();
 		
 		BrowserManager.getInstance().getBrowser().quit();
 	}
@@ -33,11 +36,12 @@ public class ResourcesTest {
 		String name = "newResourceEdit";
 //		String displayName = "newResource";
 		
-//		StartTest.getLogin()
-//		.setUsername(username)
-//		.setPassword(password)
-//		.login()
-//		.SelectResourcesOption()
+		StartTest.getLogin()
+		.setUsername(username)
+		.setPassword(password)
+		.login()
+		.SelectResourcesOption()
+		.GetListResources();
 //		.AddResource()
 //		.setName(name)
 //		.setDisplayName(displayName)
@@ -49,21 +53,26 @@ public class ResourcesTest {
 	
 	public void DeleteResources()
 	{
+		String username = "rmdom2008\\room.manager";
+		String password = "M@nager";
 		
+		StartTest.getLogin()
+		.setUsername(username)
+		.setPassword(password)
+		.login()
+		.SelectResourcesOption()
+		.SelectResource()
+		.RemoveResource();
+//		.Remove();
+		
+//		BrowserManager.getInstance().getBrowser().quit();	
 	}
 	
 	public static void main(String[] args) {
-		ResourcesTest main = new ResourcesTest();
-		
-		
-//	    extent = ;
-	    
-//	    extent.config().documentTitle("JagdPanther Firefox Report");
-//        extent.config().reportHeadline("Test report for JagdPanher applicant creation");
-//	    
-//        test = extent.startTest("TC01.1", "Positive Functional TC for Applicant creation");		
+		ResourcesTest main = new ResourcesTest();		
 		main.CreateResource();
-//		extent.endTest(test);
+//		main.DeleteResource();
+//		main.UpdateResourceName();
 	}
 
 }

@@ -15,11 +15,6 @@ public class AddResourcesPage {
 	public AddResourcesPage setName(String name)
 	{
 		WaitByXPath("(//input[@type='text'])[3]");
-//		for (int second = 0;; second++) {
-//	    	if (second >= 60) fail("timeout");
-//	    	try { if (isElementPresent(By.xpath("(//input[@type='text'])[3]"))) break; } catch (Exception e) {}
-////	    	Thread.sleep(1000);
-//	    }
 		
 		WebElement nameR = BrowserManager
 				.getInstance()
@@ -41,27 +36,16 @@ public class AddResourcesPage {
 		return this;
 	}
 	
-	public ResourcesPage CreateResource()
+	public ResourcesPage Save()
 	{
 		WebElement accept = BrowserManager
 				.getInstance()
 				.getBrowser()
 				.findElement(By.cssSelector("button.info"));
-		accept.click();;
-		//By.cssSelector("button.info")
+		accept.click();		
 		
 		return new ResourcesPage();
 	}
-	
-	private boolean isElementPresent(By by) {
-	    try {
-	    	BrowserManager.getInstance().getBrowser().findElement(by);
-//	      driver.findElement(by);
-	      return true;
-	    } catch (NoSuchElementException e) {
-	      return false;
-	    }
-	  }
 	
 	private void WaitByXPath(String path)
 	{
@@ -71,8 +55,5 @@ public class AddResourcesPage {
 		
 		wait.until(ExpectedConditions
 				.presenceOfElementLocated(By.xpath(path)));
-		
-//		BrowserManager.getInstance().getBrowser().manage().timeouts().pageLoadTimeout(3, TimeUnit.SECONDS);
 	}
-
 }
