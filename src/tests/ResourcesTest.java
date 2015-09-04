@@ -47,10 +47,12 @@ public class ResourcesTest {
 		BrowserManager.getInstance().getBrowser().quit();
 	}
 	
-	public void DeleteResources()
+	public void DeleteResource()
 	{
 		String username = "rmdom2008\\room.manager";
 		String password = "M@nager";
+		String name = "newResource";
+		String displayName = "newResource";
 		
 		StartTest.getLogin()
 		.setUsername(username)
@@ -58,8 +60,9 @@ public class ResourcesTest {
 		.login()
 		.SelectResourcesOption()
 		.SelectResource()
-		.RemoveResource();
-//		.Remove();
+		.RemoveResource()
+		.Remove()
+		.VerifyResourceWasDeleted(name, displayName);
 		
 //		BrowserManager.getInstance().getBrowser().quit();	
 	}
@@ -67,8 +70,8 @@ public class ResourcesTest {
 	public static void main(String[] args) {
 		ResourcesTest main = new ResourcesTest();		
 //		main.CreateResource();
-//		main.DeleteResource();
-		main.UpdateResourceName();
+		main.DeleteResource();
+//		main.UpdateResourceName();
 	}
 
 }
