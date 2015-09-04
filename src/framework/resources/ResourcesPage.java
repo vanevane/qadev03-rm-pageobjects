@@ -8,6 +8,7 @@ import org.bouncycastle.jcajce.provider.asymmetric.util.ExtendedInvalidKeySpecEx
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -69,6 +70,21 @@ public class ResourcesPage extends NavigationBarPage{
 	}
 	
 	/**
+	 * Method to update the last resource of the table
+	 * @return
+	 */
+	public AddResourcesPage UpdateResource()
+	{
+		List<WebElement> list = GetListResources();
+		element = list.get(list.size()-1);
+		
+		Actions action = new Actions(BrowserManager.getInstance().getBrowser());
+		action.moveToElement(element.findElement(By.cssSelector("div.ng-scope > span.ng-binding"))).doubleClick().build().perform();
+		
+		return new AddResourcesPage();
+	}
+	
+	/**
 	 * Method to get a list of the resources
 	 * @return
 	 */
@@ -76,7 +92,6 @@ public class ResourcesPage extends NavigationBarPage{
 	{
 		WebElement element2;
 		WebElement element3;
-//		WebElement element4;
 		
 		element = BrowserManager
 				.getInstance()
@@ -84,13 +99,7 @@ public class ResourcesPage extends NavigationBarPage{
 				.findElement(By.id("resourcesGrid"));//		
 		
 		element2 = element.findElement(By.xpath("div[2]"));
-//		System.out.println(element2.getText());
-//		System.out.println(element2.);
-//		System.out.println("--------------------------");
-//		
 		element3 = element2.findElement(By.tagName("div"));
-//		System.out.println(element3.getText());
-//		System.out.println("--------------------------");
 		
 		List<WebElement> listEven = element3.findElements(By.cssSelector("div.ng-scope.ngRow.even"));
 		List<WebElement> listOdd = element3.findElements(By.cssSelector("div.ng-scope.ngRow.odd"));
@@ -102,15 +111,12 @@ public class ResourcesPage extends NavigationBarPage{
 			return listOdd;
 		}
 		return null;
-		
 	}
 
 	
 	/**
 	 * Verify section
 	 */
-
-	
 	public ResourcesPage VerifyResourceWasCreated(String expName, String expDisplayName)
 	{
 		WebElement nameElement;
@@ -121,10 +127,6 @@ public class ResourcesPage extends NavigationBarPage{
 		
 		List<WebElement> list = GetListResources();
 		
-//		for (WebElement el : list) {
-//		element4 = el.findElement(By.cssSelector("div.ngCell.centeredColumn.col2.colt2"));
-//		System.out.println(element4.getText());
-//	}
 		nameElement = list.get(list.size()-1).findElement(By.cssSelector("div.ngCell.centeredColumn.col2.colt2"));
 		String name = nameElement.getText().replaceAll("\\s","");
 		
@@ -176,8 +178,6 @@ public class ResourcesPage extends NavigationBarPage{
 		
 		wait.until(ExpectedConditions
 				.presenceOfElementLocated(By.xpath(path)));
-		
-//		BrowserManager.getInstance().getBrowser().manage().timeouts().pageLoadTimeout(3, TimeUnit.SECONDS);
 	}
 	
 	/**

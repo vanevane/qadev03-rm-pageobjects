@@ -12,6 +12,11 @@ import framework.browser.BrowserManager;
 
 public class AddResourcesPage {
 	
+	/**
+	 * Method to set the name of a resource
+	 * @param name
+	 * @return
+	 */
 	public AddResourcesPage setName(String name)
 	{
 		WaitByXPath("(//input[@type='text'])[3]");
@@ -20,11 +25,17 @@ public class AddResourcesPage {
 				.getInstance()
 				.getBrowser()
 				.findElement(By.xpath("(//input[@type='text'])[3]"));
+		nameR.clear();
 		nameR.sendKeys(name);
 		
 		return this;
 	}
 	
+	/**
+	 * Method to set the displayName of a resource
+	 * @param displayName
+	 * @return
+	 */
 	public AddResourcesPage setDisplayName(String displayName)
 	{
 		WebElement displayNameR = BrowserManager
@@ -36,6 +47,10 @@ public class AddResourcesPage {
 		return this;
 	}
 	
+	/**
+	 * Method to click on the Save button
+	 * @return
+	 */
 	public ResourcesPage Save()
 	{
 		WebElement accept = BrowserManager

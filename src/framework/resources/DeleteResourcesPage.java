@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import framework.browser.BrowserManager;
 
 public class DeleteResourcesPage {
+	
 	WebElement element;
 	public ResourcesPage Remove()
 	{

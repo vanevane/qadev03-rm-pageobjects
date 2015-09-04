@@ -34,19 +34,15 @@ public class ResourcesTest {
 		String username = "rmdom2008\\room.manager";
 		String password = "M@nager";
 		String name = "newResourceEdit";
-//		String displayName = "newResource";
 		
 		StartTest.getLogin()
 		.setUsername(username)
 		.setPassword(password)
 		.login()
 		.SelectResourcesOption()
-		.GetListResources();
-//		.AddResource()
-//		.setName(name)
-//		.setDisplayName(displayName)
-//		.CreateResource()
-//		.VerifyResourceWasCreated();
+		.UpdateResource()
+		.setName(name)
+		.Save();
 		
 		BrowserManager.getInstance().getBrowser().quit();
 	}
@@ -70,9 +66,9 @@ public class ResourcesTest {
 	
 	public static void main(String[] args) {
 		ResourcesTest main = new ResourcesTest();		
-		main.CreateResource();
+//		main.CreateResource();
 //		main.DeleteResource();
-//		main.UpdateResourceName();
+		main.UpdateResourceName();
 	}
 
 }
