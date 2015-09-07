@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import framework.browser.BrowserManager;
 import framework.conferenceRooms.ConferenceRoomsPage;
+import framework.emailServers.EmailServersPage;
 import framework.resources.ResourcesPage;
 
 public class NavigationBarPage {
@@ -33,6 +34,16 @@ public class NavigationBarPage {
 		resources.click();
 		
 		return new ConferenceRoomsPage();
+	}
+	
+	public EmailServersPage SelectEmailServersOption()
+	{
+		WaitByLinkText("Email Servers");
+		
+		WebElement resources = BrowserManager.getInstance().getBrowser().findElement(By.linkText("Email Servers"));
+		resources.click();
+		
+		return new EmailServersPage();
 	}
 	
 	private boolean isElementPresent(By by) {

@@ -96,7 +96,7 @@ public class ResourcesPage extends NavigationBarPage{
 		element = BrowserManager
 				.getInstance()
 				.getBrowser()
-				.findElement(By.id("resourcesGrid"));//		
+				.findElement(By.id("resourcesGrid"));		
 		
 		element2 = element.findElement(By.xpath("div[2]"));
 		element3 = element2.findElement(By.tagName("div"));
@@ -115,13 +115,16 @@ public class ResourcesPage extends NavigationBarPage{
 
 	
 	/**
-	 * Verify section
+	 * Verify a resource was created
+	 * @param expName
+	 * @param expDisplayName
+	 * @return
 	 */
 	public ResourcesPage VerifyResourceWasCreated(String expName, String expDisplayName)
 	{
 		WebElement nameElement;
 		WebElement displayNameElement;
-//		
+
 		SelectRoomsOption();
 		SelectResourcesOption();
 		
@@ -133,14 +136,20 @@ public class ResourcesPage extends NavigationBarPage{
 		displayNameElement = list.get(list.size()-1).findElement(By.cssSelector("div.ngCell.centeredColumn.col3.colt3"));
 		String displayName = displayNameElement.getText().replaceAll("\\s","");
 		
-		System.out.println(nameElement);
-		System.out.println(displayNameElement);
+//		System.out.println(nameElement);
+//		System.out.println(displayNameElement);
 		assertEquals(expName, name);
 		assertEquals(expDisplayName, displayName);
 		
 		return this;
 	}
 	
+	/**
+	 * Verify a resource was deleted
+	 * @param expName
+	 * @param expDisplayName
+	 * @return
+	 */
 	public ResourcesPage VerifyResourceWasDeleted(String expName, String expDisplayName)
 	{
 		List<WebElement> list = GetListResources();
@@ -157,14 +166,43 @@ public class ResourcesPage extends NavigationBarPage{
 		displayNameElement = list.get(list.size()-1).findElement(By.cssSelector("div.ngCell.centeredColumn.col3.colt3"));
 		String displayName = displayNameElement.getText().replaceAll("\\s","");
 		
-		System.out.println(nameElement);
-		System.out.println(displayNameElement);
+//		System.out.println(nameElement);
+//		System.out.println(displayNameElement);
 //		System.out.println("newResource");
 		assertNotEquals(expName, name);
 		assertNotEquals(expDisplayName, displayName);
 		
 		return this;
 	}
+	
+	/**
+	 * Method to verify a resource's name was updated
+	 * @param name
+	 */
+	public ResourcesPage VerifyResourceNameWasUpdated(String expName)
+	{
+		WebElement nameElement;
+//		WebElement displayNameElement;
+
+		SelectRoomsOption();
+		SelectResourcesOption();
+		
+		List<WebElement> list = GetListResources();
+		
+		nameElement = list.get(list.size()-1).findElement(By.cssSelector("div.ngCell.centeredColumn.col2.colt2"));
+		String name = nameElement.getText().replaceAll("\\s","");
+		
+//		displayNameElement = list.get(list.size()-1).findElement(By.cssSelector("div.ngCell.centeredColumn.col3.colt3"));
+//		String displayName = displayNameElement.getText().replaceAll("\\s","");
+		
+//		System.out.println(nameElement);
+//		System.out.println(displayNameElement);
+		assertEquals(expName, name);
+//		assertEquals(expDisplayName, displayName);
+		
+		return this;
+	}
+	
 	
 	/**
 	 * Wait by path

@@ -1,4 +1,4 @@
-package framework.resources;
+package framework.emailServers;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,20 +7,21 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import framework.browser.BrowserManager;
 
-public class DeleteResourcesPage {
+public class RemoveEmailServersPage {
 	
 	WebElement element;
-	public ResourcesPage Remove()
+	
+	public EmailServersPage Remove()
 	{
-		WaitByCss("button.info");
+		WaitByCss("div.pull-right > button.btn-clear.info");
 		
 		element = BrowserManager
 				.getInstance()
 				.getBrowser()
-				.findElement(By.cssSelector("button.info"));
+				.findElement(By.cssSelector("div.pull-right > button.btn-clear.info"));
 		element.click();
 		
-		return new ResourcesPage();
+		return new EmailServersPage();
 	}
 	
 	/**

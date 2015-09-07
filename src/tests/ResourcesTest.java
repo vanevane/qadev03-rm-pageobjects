@@ -21,10 +21,10 @@ public class ResourcesTest {
 		.setName(name)
 		.setDisplayName(displayName)
 		.Save()
-		.VerifyResourceWasCreated(name, displayName)
-		.SelectResource()
-		.RemoveResource()
-		.Remove();
+		.VerifyResourceWasCreated(name, displayName);
+//		.SelectResource()
+//		.RemoveResource()
+//		.Remove();
 		
 		BrowserManager.getInstance().getBrowser().quit();
 	}
@@ -42,7 +42,8 @@ public class ResourcesTest {
 		.SelectResourcesOption()
 		.UpdateResource()
 		.setName(name)
-		.Save();
+		.Save()
+		.VerifyResourceNameWasUpdated(name);
 		
 		BrowserManager.getInstance().getBrowser().quit();
 	}
@@ -64,14 +65,14 @@ public class ResourcesTest {
 		.Remove()
 		.VerifyResourceWasDeleted(name, displayName);
 		
-//		BrowserManager.getInstance().getBrowser().quit();	
+		BrowserManager.getInstance().getBrowser().quit();	
 	}
 	
 	public static void main(String[] args) {
 		ResourcesTest main = new ResourcesTest();		
 //		main.CreateResource();
-		main.DeleteResource();
-//		main.UpdateResourceName();
+//		main.DeleteResource();
+		main.UpdateResourceName();
 	}
 
 }
