@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Resources Test Cases">
+  <test name="Create a Resource">
+    <classes>
+      <class name="tests.ResourcesTestCases"/>
+    </classes>
+  </test> <!-- Test -->
+  <test name="Update a resource's Name">
+    <classes>
+      <class name="tests.ResourcesTestCases"/>
+    </classes>
+  </test> <!-- Test -->
+  <test name="Delete a resource">
+    <classes>
+      <class name="tests.ResourcesTestCases"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

@@ -7,9 +7,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class BrowserManager {
 
-	WebDriver driver;
+	public WebDriver driver;
 	private static BrowserManager instance = null;
+		
 	protected BrowserManager() {
+		System.out.println("ENTER BROWSER");
 		String baseUrl = "http://172.20.208.79:4040/admin/#/admin";
 		driver = new FirefoxDriver();
 		
@@ -19,8 +21,10 @@ public class BrowserManager {
 	}
 	public static BrowserManager getInstance() {
       if(instance == null) {
+    	  System.out.println("INSTANCE IS NULL");
          instance = new BrowserManager();
       }
+//      System.out.println("NOT NULL");
       return instance;
 	}
    
@@ -32,5 +36,13 @@ public class BrowserManager {
 	public void setBrowser(WebDriver d)
 	{
 		this.driver = d;
+	}
+	
+	public void exit()
+	{
+		this.driver.quit();
+		System.out.println("Entering new instance ");
+		instance = null;
+//		System.out.println("Instance: "+ instance);
 	}
 }

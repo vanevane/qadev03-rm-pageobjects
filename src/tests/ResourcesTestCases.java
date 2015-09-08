@@ -1,15 +1,15 @@
 package tests;
 
-import framework.StartTest;
-import framework.browser.BrowserManager;
 import org.testng.annotations.Test;
 
-public class ResourcesTest {
+import framework.StartTest;
+import framework.browser.BrowserManager;
+
+public class ResourcesTestCases {
 	
-	@Test
-	public void CreateResource()
-	{
-		String username = "rmdom2008\\room.manager";
+  @Test
+  public void CreateResource() {
+	  String username = "rmdom2008\\room.manager";
 		String password = "M@nager";
 		String name = "newResource";
 		String displayName = "newResource";
@@ -29,9 +29,10 @@ public class ResourcesTest {
 //		.Remove();
 		
 		BrowserManager.getInstance().getBrowser().quit();
-	}
-	
-	public void UpdateResourceName()
+  }
+  
+  @Test
+  public void UpdateResourceName()
 	{
 		String username = "rmdom2008\\room.manager";
 		String password = "M@nager";
@@ -50,6 +51,7 @@ public class ResourcesTest {
 		BrowserManager.getInstance().getBrowser().quit();
 	}
 	
+  @Test
 	public void DeleteResource()
 	{
 		String username = "rmdom2008\\room.manager";
@@ -69,12 +71,4 @@ public class ResourcesTest {
 		
 		BrowserManager.getInstance().getBrowser().quit();	
 	}
-	
-	public static void main(String[] args) {
-		ResourcesTest main = new ResourcesTest();		
-//		main.CreateResource();
-//		main.DeleteResource();
-		main.UpdateResourceName();
-	}
-
 }

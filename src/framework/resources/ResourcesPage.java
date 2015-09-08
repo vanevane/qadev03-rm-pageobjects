@@ -1,8 +1,9 @@
 package framework.resources;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.fail;
+import org.testng.Assert;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotEquals;
+//import static org.junit.Assert.fail;
 
 import org.bouncycastle.jcajce.provider.asymmetric.util.ExtendedInvalidKeySpecException;
 import org.openqa.selenium.By;
@@ -138,8 +139,8 @@ public class ResourcesPage extends NavigationBarPage{
 		
 //		System.out.println(nameElement);
 //		System.out.println(displayNameElement);
-		assertEquals(expName, name);
-		assertEquals(expDisplayName, displayName);
+		Assert.assertEquals(expName, name);
+		Assert.assertEquals(expDisplayName, displayName);
 		
 		return this;
 	}
@@ -169,8 +170,8 @@ public class ResourcesPage extends NavigationBarPage{
 //		System.out.println(nameElement);
 //		System.out.println(displayNameElement);
 //		System.out.println("newResource");
-		assertNotEquals(expName, name);
-		assertNotEquals(expDisplayName, displayName);
+		Assert.assertNotEquals(expName, name);
+		Assert.assertNotEquals(expDisplayName, displayName);
 		
 		return this;
 	}
@@ -197,7 +198,7 @@ public class ResourcesPage extends NavigationBarPage{
 		
 //		System.out.println(nameElement);
 //		System.out.println(displayNameElement);
-		assertEquals(expName, name);
+		Assert.assertEquals(expName, name);
 //		assertEquals(expDisplayName, displayName);
 		
 		return this;
