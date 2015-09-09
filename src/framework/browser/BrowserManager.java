@@ -21,7 +21,7 @@ public class BrowserManager {
 	}
 	public static BrowserManager getInstance() {
       if(instance == null) {
-    	  System.out.println("INSTANCE IS NULL");
+//    	  System.out.println("INSTANCE IS NULL");
          instance = new BrowserManager();
       }
 //      System.out.println("NOT NULL");
@@ -41,7 +41,7 @@ public class BrowserManager {
 	public void exit()
 	{
 		this.driver.quit();
-		System.out.println("Entering new instance ");
+//		System.out.println("Entering new instance ");
 		instance = null;
 //		System.out.println("Instance: "+ instance);
 	}

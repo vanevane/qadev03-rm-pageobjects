@@ -53,6 +53,8 @@ public class AddResourcesPage {
 	 */
 	public ResourcesPage Save()
 	{
+//		System.out.println("looking for button save");
+		
 		WebElement accept = BrowserManager
 				.getInstance()
 				.getBrowser()

@@ -182,6 +182,7 @@ public class ResourcesPage extends NavigationBarPage{
 	 */
 	public ResourcesPage VerifyResourceNameWasUpdated(String expName)
 	{
+//		System.out.println("verifying");
 		WebElement nameElement;
 //		WebElement displayNameElement;
 
