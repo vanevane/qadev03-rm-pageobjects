@@ -14,7 +14,7 @@ import rest.ResourcesRequests;
 
 public class CreateResource {
 	Properties settings = ReadPropertyValues
-			.getPropertyFile("./config/settings.properties");
+			.getPropertyFile("./Config/settings.properties");
 	String username = settings.getProperty("username");
 	String password = settings.getProperty("password");
 	String name = "newResource";

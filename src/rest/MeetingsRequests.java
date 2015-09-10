@@ -24,9 +24,9 @@ public class MeetingsRequests {
 
 	static String token;
 	static Properties settings = ReadPropertyValues
-			.getPropertyFile("./config/settings.properties");
+			.getPropertyFile("./Config/settings.properties");
 	static Properties meetings = ReadPropertyValues
-			.getPropertyFile("./config/meetings.properties");
+			.getPropertyFile("./Config/meetings.properties");
 	
 	/**
 	 * API endpoints

@@ -17,9 +17,9 @@ import framework.ReadPropertyValues;
 public class LoginRequests {
 	
 	static Properties settings = ReadPropertyValues
-			.getPropertyFile("./config/settings.properties");
+			.getPropertyFile("./Config/settings.properties");
 	static Properties login = ReadPropertyValues
-			.getPropertyFile("./config/login.properties");
+			.getPropertyFile("./Config/login.properties");
 	
 	static String loginEp = login.getProperty("login")
 			.replace("[server]", settings.getProperty("server"))

@@ -21,9 +21,9 @@ import framework.ReadPropertyValues;
 public class LocationsRequests {
 	static String token;
 	static Properties settings = ReadPropertyValues
-			.getPropertyFile("./config/settings.properties");
+			.getPropertyFile("./Config/settings.properties");
 	static Properties locations = ReadPropertyValues
-			.getPropertyFile("./config/locations.properties");
+			.getPropertyFile("./Config/locations.properties");
 	
 	/**
 	 * API endpoints

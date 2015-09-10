@@ -39,9 +39,9 @@ import tests.EmailServersTest;
 public class ResourcesRequests {
 	static String token;
 	static Properties settings = ReadPropertyValues
-			.getPropertyFile("./config/settings.properties");
+			.getPropertyFile("./Config/settings.properties");
 	static Properties resources = ReadPropertyValues
-			.getPropertyFile("./config/resources.properties");
+			.getPropertyFile("./Config/resources.properties");
 	
 	/**
 	 * API endpoints

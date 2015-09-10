@@ -22,9 +22,9 @@ import framework.ReadPropertyValues;
 public class ConferenceRoomsRequests {
 	static String token;
 	static Properties settings = ReadPropertyValues
-			.getPropertyFile("./config/settings.properties");
+			.getPropertyFile("./Config/settings.properties");
 	static Properties rooms = ReadPropertyValues
-			.getPropertyFile("./config/conferenceRooms.properties");
+			.getPropertyFile("./Config/conferenceRooms.properties");
 	
 	/**
 	 * API endpoints

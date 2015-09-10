@@ -19,9 +19,9 @@ public class ServicesRequests {
 
 	static String token;
 	static Properties settings = ReadPropertyValues
-			.getPropertyFile("./config/settings.properties");
+			.getPropertyFile("./Config/settings.properties");
 	static Properties services = ReadPropertyValues
-			.getPropertyFile("./config/services.properties");
+			.getPropertyFile("./Config/services.properties");
 	
 	/**
 	 * API endpoints
