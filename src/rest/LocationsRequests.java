@@ -1,30 +1,16 @@
 package rest;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -32,38 +18,35 @@ import org.json.simple.parser.JSONParser;
 
 import framework.ReadPropertyValues;
 
-//import com.gargoylesoftware.htmlunit.util.NameValuePair;
-
-import tests.EmailServersTest;
-
-public class ResourcesRequests {
+public class LocationsRequests {
 	static String token;
 	static Properties settings = ReadPropertyValues
 			.getPropertyFile("./config/settings.properties");
-	static Properties resources = ReadPropertyValues
-			.getPropertyFile("./config/resources.properties");
+	static Properties locations = ReadPropertyValues
+			.getPropertyFile("./config/locations.properties");
 	
 	/**
 	 * API endpoints
 	 */
-	static String resourceEp = resources.getProperty("resources")
+	static String locationEp = locations.getProperty("locations")
 			.replace("[server]", settings.getProperty("server"))
 			.replace("[port]", settings.getProperty("port"));
-	static String resourceByIdEp = resources.getProperty("resourceById")
+	static String locationByIdEp = locations.getProperty("locationById")
 			.replace("[server]", settings.getProperty("server"))
 			.replace("[port]", settings.getProperty("port"));
+			
 	
 	/**
-	 * Get all the resources
+	 * Get all the locations
 	 * @throws UnsupportedOperationException
 	 * @throws IOException
 	 */
-	public static ArrayList<JSONObject> getResources() throws UnsupportedOperationException, IOException
+	public static ArrayList<JSONObject> getLocations() throws UnsupportedOperationException, IOException
 	{
 		ArrayList<JSONObject> listResponse = new ArrayList<JSONObject>();
 		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-			HttpGet request = new HttpGet(resourceEp);
+			HttpGet request = new HttpGet(locationEp);
 			
             request.setHeader("Content-type", "application/json");
             HttpResponse result = httpClient.execute(request);
@@ -102,10 +85,10 @@ public class ResourcesRequests {
 	 * @throws UnsupportedOperationException
 	 * @throws IOException
 	 */
-	public static void postResource() throws UnsupportedOperationException, IOException
+	public static void postLocation() throws UnsupportedOperationException, IOException
 	{
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-			HttpPost request = new HttpPost(resourceEp);
+			HttpPost request = new HttpPost(locationEp);
 			
 			token = LoginRequests.getToken();
 			
@@ -120,11 +103,8 @@ public class ResourcesRequests {
 			 * Request's body
 			 */
 			JSONObject body = new JSONObject();
-		  	body.put("name", "gift");
-		  	body.put("customName", "gift");
-		  	body.put("fontIcon", "fa fa-gift");
-		  	body.put("from", "");
-		  	body.put("description", "");
+		  	body.put("name", "newLocation");
+		  	body.put("customName", "newLocation");		  	
 		  	
 			StringEntity entity = new StringEntity(body.toString());
 		    request.setEntity(entity);
@@ -136,9 +116,9 @@ public class ResourcesRequests {
         }
 	}
 	
-	public static void deleteResource(String resourceId) throws UnsupportedOperationException, IOException
+	public static void deleteLocation(String locationId) throws UnsupportedOperationException, IOException
 	{
-		String url = resourceByIdEp.replace("[id]", resourceId);
+		String url = locationByIdEp.replace("[id]", locationId);
 		token = LoginRequests.getToken();
 		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
@@ -156,12 +136,12 @@ public class ResourcesRequests {
         }
 	}
 	
-	public static String getResourceId(String name)
+	public static String getLocationId(String name)
 	{
 		String id = "";
 		ArrayList<JSONObject> list;
 		try {
-			list = getResources();
+			list = getLocations();
 			for (JSONObject object : list) {
 				if(object.get("name").toString().equals(name))
 					id = object.get("_id").toString();

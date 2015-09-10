@@ -14,11 +14,12 @@ import framework.browser.BrowserManager;
 import framework.conferenceRooms.ConferenceRoomsPage;
 import framework.emailServers.EmailServersPage;
 import framework.resources.ResourcesPage;
+import utils.Waiters;
 
 public class NavigationBarPage {
 	public ResourcesPage SelectResourcesOption()
 	{
-		WaitByLinkText("Resources");
+		Waiters.WaitByLinkText("Resources");
 		
 		WebElement resources = BrowserManager.getInstance().getBrowser().findElement(By.linkText("Resources"));
 		resources.click();
@@ -28,7 +29,7 @@ public class NavigationBarPage {
 	
 	public ConferenceRoomsPage SelectRoomsOption()
 	{
-		WaitByLinkText("Conference Rooms");
+		Waiters.WaitByLinkText("Conference Rooms");
 		
 		WebElement resources = BrowserManager.getInstance().getBrowser().findElement(By.linkText("Conference Rooms"));
 		resources.click();
@@ -38,7 +39,7 @@ public class NavigationBarPage {
 	
 	public EmailServersPage SelectEmailServersOption()
 	{
-		WaitByLinkText("Email Servers");
+		Waiters.WaitByLinkText("Email Servers");
 		
 		WebElement resources = BrowserManager.getInstance().getBrowser().findElement(By.linkText("Email Servers"));
 		resources.click();
@@ -46,23 +47,23 @@ public class NavigationBarPage {
 		return new EmailServersPage();
 	}
 	
-	private boolean isElementPresent(By by) {
-	    try {
-	    	BrowserManager.getInstance().getBrowser().findElement(by);
-	      return true;
-	    } catch (NoSuchElementException e) {
-	      return false;
-	    }
-	  }
+//	private boolean isElementPresent(By by) {
+//	    try {
+//	    	BrowserManager.getInstance().getBrowser().findElement(by);
+//	      return true;
+//	    } catch (NoSuchElementException e) {
+//	      return false;
+//	    }
+//	  }
 	
-	private void WaitByLinkText(String link)
-	{
-		WebDriverWait wait = new WebDriverWait(BrowserManager
-				.getInstance()
-				.getBrowser(), 10);
-		
-		wait.until(ExpectedConditions
-				.presenceOfElementLocated(By.linkText(link)));
-	}
+//	private void WaitByLinkText(String link)
+//	{
+//		WebDriverWait wait = new WebDriverWait(BrowserManager
+//				.getInstance()
+//				.getBrowser(), 10);
+//		
+//		wait.until(ExpectedConditions
+//				.presenceOfElementLocated(By.linkText(link)));
+//	}
 
 }

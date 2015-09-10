@@ -11,7 +11,7 @@ public class BrowserManager {
 	private static BrowserManager instance = null;
 		
 	protected BrowserManager() {
-		System.out.println("ENTER BROWSER");
+//		System.out.println("ENTER BROWSER");
 		String baseUrl = "http://172.20.208.79:4040/admin/#/admin";
 		driver = new FirefoxDriver();
 		

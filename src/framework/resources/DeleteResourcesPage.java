@@ -6,13 +6,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import framework.browser.BrowserManager;
+import utils.Waiters;
 
-public class DeleteResourcesPage {
-	
+public class DeleteResourcesPage {	
 	WebElement element;
+	
+	/**
+	 * Method to click the Remove button
+	 * @return
+	 */
 	public ResourcesPage Remove()
 	{
-		WaitByCss("button.info");
+		Waiters.WaitByCss("button.info");
 		
 		element = BrowserManager
 				.getInstance()
@@ -21,19 +26,5 @@ public class DeleteResourcesPage {
 		element.click();
 		
 		return new ResourcesPage();
-	}
-	
-	/**
-	 * Wait by css
-	 * @param path
-	 */
-	private void WaitByCss(String path)
-	{
-		WebDriverWait wait = new WebDriverWait(BrowserManager
-				.getInstance()
-				.getBrowser(), 5);
-		
-		wait.until(ExpectedConditions
-				.presenceOfElementLocated(By.cssSelector(path)));
 	}
 }

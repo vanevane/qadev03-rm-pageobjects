@@ -13,10 +13,10 @@ import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
 
 public class ResourcesTest {
-	Properties prop = ReadPropertyValues
-			.getPropertyFile("./config/resources.properties");
-	String username = prop.getProperty("username");
-	String password = prop.getProperty("password");
+	Properties settings = ReadPropertyValues
+			.getPropertyFile("./config/settings.properties");
+	String username = settings.getProperty("username");
+	String password = settings.getProperty("password");
 
 	@Test
 	public void CreateResource()
@@ -35,22 +35,23 @@ public class ResourcesTest {
 		.AddResource()
 		.setName(name)
 		.setDisplayName(displayName)
-		.Save();
-//		.VerifyResourceWasCreated(name, displayName);
+		.Save()
+		.VerifyResourceWasCreated(name, displayName)
+		.SingOut();
 
 		//Postconditions
-		try {
-			ArrayList<JSONObject> resources = ResourcesRequests.getResources();
-			for (JSONObject object : resources) {
-				if(object.get("name").toString().equals(name))
-					id = object.get("_id").toString();
-			}
-			ResourcesRequests.deleteResource(id);
-			BrowserManager.getInstance().getBrowser().quit();
-		
-		} catch (UnsupportedOperationException | IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			ArrayList<JSONObject> resources = ResourcesRequests.getResources();
+//			for (JSONObject object : resources) {
+//				if(object.get("name").toString().equals(name))
+//					id = object.get("_id").toString();
+//			}
+//			ResourcesRequests.deleteResource(id);
+//			BrowserManager.getInstance().getBrowser().quit();
+//		
+//		} catch (UnsupportedOperationException | IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void UpdateResourceName()
@@ -96,8 +97,8 @@ public class ResourcesTest {
 	
 	public void DeleteResource()
 	{
-		String username = "rmdom2008\\room.manager";
-		String password = "M@nager";
+//		String username = "rmdom2008\\room.manager";
+//		String password = "M@nager";
 		String name = "newResource";
 		String displayName = "newResource";
 		
@@ -109,16 +110,17 @@ public class ResourcesTest {
 		.SelectResource()
 		.RemoveResource()
 		.Remove()
-		.VerifyResourceWasDeleted(name, displayName);
+		.VerifyResourceWasDeleted(name, displayName)
+		.SingOut();
 		
-		BrowserManager.getInstance().getBrowser().quit();	
+//		BrowserManager.getInstance().getBrowser().quit();	
 	}
 	
 	public static void main(String[] args) {
 		ResourcesTest main = new ResourcesTest();		
-//		main.CreateResource();
-//		main.DeleteResource();
-		main.UpdateResourceName();
+		main.CreateResource();
+		main.DeleteResource();
+//		main.UpdateResourceName();
 	}
 
 }

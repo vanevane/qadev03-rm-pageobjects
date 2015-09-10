@@ -16,12 +16,14 @@ import framework.ReadPropertyValues;
 
 public class LoginRequests {
 	
-	static Properties prop = ReadPropertyValues
-			.getPropertyFile("./config/resources.properties");
+	static Properties settings = ReadPropertyValues
+			.getPropertyFile("./config/settings.properties");
+	static Properties login = ReadPropertyValues
+			.getPropertyFile("./config/login.properties");
 	
-	static String login = prop.getProperty("login")
-			.replace("[server]", prop.getProperty("server"))
-			.replace("[port]", prop.getProperty("port"));
+	static String loginEp = login.getProperty("login")
+			.replace("[server]", settings.getProperty("server"))
+			.replace("[port]", settings.getProperty("port"));
 	
 	/**
 	 * Method to get the token
@@ -31,15 +33,15 @@ public class LoginRequests {
 	public static String getToken() throws UnsupportedOperationException, IOException
 	{
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-			HttpPost request = new HttpPost(login);
+			HttpPost request = new HttpPost(loginEp);
 			
 			request.addHeader("Content-type", "application/json");
 			request.setHeader("Accept", "application/json");
 			  
 			JSONObject body=new JSONObject();
-			body.put("username", prop.getProperty("username"));
-			body.put("password", prop.getProperty("password"));
-			body.put("authentication", prop.getProperty("authentication"));
+			body.put("username", settings.getProperty("username"));
+			body.put("password", settings.getProperty("password"));
+			body.put("authentication", settings.getProperty("authentication"));
 			
 			StringEntity entity = new StringEntity(body.toString());
 		    request.setEntity(entity);
@@ -53,11 +55,9 @@ public class LoginRequests {
                 Object resultObject = parser.parse(json);
                 
                 JSONObject obj =(JSONObject)resultObject;
-//                System.out.println(obj.get("token"));
                 return obj.get("token").toString();
 
             } catch (Exception e) {
-                // TODO: handle exception
             }
 
         } catch (IOException ex) {

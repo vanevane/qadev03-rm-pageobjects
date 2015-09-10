@@ -9,7 +9,6 @@ import java.util.Properties;
 import rest.ResourcesRequests;
 
 public class ReadPropertyValues {
-//	InputStream inputStream;
 	
 	public static Properties getPropertyFile(String path)
 	{
@@ -35,9 +34,4 @@ public class ReadPropertyValues {
 		}
 		return null;
 	}
- 
-//	public static void main(String[] args) throws IOException {
-//		ReadPropertyValues read = new ReadPropertyValues();
-//		read.getPropValues();
-//	}
 }

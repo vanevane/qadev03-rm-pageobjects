@@ -1,30 +1,18 @@
 package rest;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.Base64;
 import java.util.Properties;
 
-import org.apache.http.HttpEntity;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -32,24 +20,21 @@ import org.json.simple.parser.JSONParser;
 
 import framework.ReadPropertyValues;
 
-//import com.gargoylesoftware.htmlunit.util.NameValuePair;
+public class MeetingsRequests {
 
-import tests.EmailServersTest;
-
-public class ResourcesRequests {
 	static String token;
 	static Properties settings = ReadPropertyValues
 			.getPropertyFile("./config/settings.properties");
-	static Properties resources = ReadPropertyValues
-			.getPropertyFile("./config/resources.properties");
+	static Properties meetings = ReadPropertyValues
+			.getPropertyFile("./config/meetings.properties");
 	
 	/**
 	 * API endpoints
 	 */
-	static String resourceEp = resources.getProperty("resources")
+	static String meetingEp = meetings.getProperty("meetings")
 			.replace("[server]", settings.getProperty("server"))
 			.replace("[port]", settings.getProperty("port"));
-	static String resourceByIdEp = resources.getProperty("resourceById")
+	static String meetingByIdEp = meetings.getProperty("meetingById")
 			.replace("[server]", settings.getProperty("server"))
 			.replace("[port]", settings.getProperty("port"));
 	
@@ -58,12 +43,17 @@ public class ResourcesRequests {
 	 * @throws UnsupportedOperationException
 	 * @throws IOException
 	 */
-	public static ArrayList<JSONObject> getResources() throws UnsupportedOperationException, IOException
+	public static ArrayList<JSONObject> getRoomMeetings() throws UnsupportedOperationException, IOException
 	{
+		String service = ServicesRequests.getServiceId();
+		String room = ConferenceRoomsRequests.getRoomId("Conference Room 1");
+		String url = meetingEp
+				.replace("[serviceId]", service)
+				.replace("[roomId]", room);
 		ArrayList<JSONObject> listResponse = new ArrayList<JSONObject>();
 		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-			HttpGet request = new HttpGet(resourceEp);
+			HttpGet request = new HttpGet(url);
 			
             request.setHeader("Content-type", "application/json");
             HttpResponse result = httpClient.execute(request);
@@ -96,57 +86,75 @@ public class ResourcesRequests {
         }
 		return listResponse;
 	}
-
-	/**
-	 * Create a resource
-	 * @throws UnsupportedOperationException
-	 * @throws IOException
-	 */
-	public static void postResource() throws UnsupportedOperationException, IOException
+	
+	public static void postMeeting()
 	{
+		String str = "room.manager:M@nager";
+		byte[]   bytesEncoded = Base64.encodeBase64(str .getBytes());
+		token = new String(bytesEncoded );
+		
+		String service = ServicesRequests.getServiceId();
+		String room = ConferenceRoomsRequests.getRoomId("Conference Room 1");
+		String url = meetingEp
+				.replace("[serviceId]", service)
+				.replace("[roomId]", room);
+		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
-			HttpPost request = new HttpPost(resourceEp);
-			
-			token = LoginRequests.getToken();
+			HttpPost request = new HttpPost(url);
 			
 			/**
 			 * Setting the headers
 			 */
-			request.addHeader("Content-type", "application/json");
+			request.setHeader("Content-type", "application/json");
 			request.setHeader("Accept", "application/json");
-			request.setHeader("Authorization", "jwt "+ token);
+			request.setHeader("Authorization", "Basic "+ token);
 			
 			/**
 			 * Request's body
 			 */
 			JSONObject body = new JSONObject();
-		  	body.put("name", "gift");
-		  	body.put("customName", "gift");
-		  	body.put("fontIcon", "fa fa-gift");
-		  	body.put("from", "");
-		  	body.put("description", "");
+			body.put("organizer", "room.manager");
+		  	body.put("title", "Whatever");
+		  	body.put("start", "2015-09-10T23:00:00.000Z");
+		  	body.put("end", "2015-09-10T23:30:00.000Z");
+		  	body.put("location", "Conference Room1");
+		  	body.put("roomEmail", "conferenceroom1@rmdom2008.lab");
+		  	body.put("resources", new JSONArray());
+		  	body.put("attendees", new JSONArray());
 		  	
 			StringEntity entity = new StringEntity(body.toString());
 		    request.setEntity(entity);
 
             HttpResponse result = httpClient.execute(request);
+            String json = EntityUtils.toString(result.getEntity(), "UTF-8");
+            System.out.println(result.getStatusLine().getStatusCode());
+            System.out.println(result.getStatusLine().getReasonPhrase());
+            System.out.println(json);
 
         } 
 		catch (IOException ex) {
         }
 	}
 	
-	public static void deleteResource(String resourceId) throws UnsupportedOperationException, IOException
+	public static void deleteMeeting(String meetingId) throws UnsupportedOperationException, IOException
 	{
-		String url = resourceByIdEp.replace("[id]", resourceId);
-		token = LoginRequests.getToken();
+		String service = ServicesRequests.getServiceId();
+		String room = ConferenceRoomsRequests.getRoomId("Conference Room 1");
+		String url = meetingByIdEp
+				.replace("[serviceId]", service)
+				.replace("[roomId]", room)
+				.replace("[meetingId]", meetingId);
+		
+		String str = "room.manager:M@nager";
+		byte[]   bytesEncoded = Base64.encodeBase64(str .getBytes());
+		token = new String(bytesEncoded );
 		
 		try (CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
 			HttpDelete request = new HttpDelete(url);
 
 			request.setHeader("Content-type", "application/json");
             request.setHeader("Accept", "application/json");
-			request.setHeader("Authorization", "jwt "+ token);
+			request.setHeader("Authorization", "Basic "+ token);
 
 			HttpResponse result = httpClient.execute(request);
 
@@ -156,14 +164,14 @@ public class ResourcesRequests {
         }
 	}
 	
-	public static String getResourceId(String name)
+	public String getMeetingId(String name)
 	{
 		String id = "";
 		ArrayList<JSONObject> list;
 		try {
-			list = getResources();
+			list = getRoomMeetings();
 			for (JSONObject object : list) {
-				if(object.get("name").toString().equals(name))
+				if(object.get("title").toString().equals(name))
 					id = object.get("_id").toString();
 			}
 		} catch (UnsupportedOperationException | IOException e) {
