@@ -1,6 +1,7 @@
 package framework.home;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import framework.browser.BrowserManager;
@@ -10,17 +11,17 @@ import utils.Waiters;
 
 public class HomePage extends NavigationBarPage{	
 	
-	public LoginPage SingOut()
-	{
-		Waiters.WaitByCss("a > span");;
+	private By signOutBtn = By.xpath("//span[contains(.,'sign out')]");
+
+	/*---------------------------------------*/
+	public HomePage(WebDriver driver) {
+		super(driver);
 		
-		WebElement singout = BrowserManager
-				.getInstance()
-				.getBrowser()
-				.findElement(By.cssSelector("a > span"));
-		singout.click();
-		
-		return new LoginPage();
-		//a > span
+	}
+	public LoginPage SignOut() {
+		WebElement element=driver.findElement(signOutBtn);
+		if(element.isDisplayed()||element.isEnabled())
+			element.click();
+		return new LoginPage(driver);
 	}
 }

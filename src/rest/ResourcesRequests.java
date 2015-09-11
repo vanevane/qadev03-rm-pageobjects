@@ -34,7 +34,7 @@ import framework.ReadPropertyValues;
 
 //import com.gargoylesoftware.htmlunit.util.NameValuePair;
 
-import tests.EmailServersTest;
+//import tests.EmailServersTest;
 
 public class ResourcesRequests {
 	static String token;

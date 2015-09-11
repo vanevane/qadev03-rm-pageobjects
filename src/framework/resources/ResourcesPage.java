@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.bouncycastle.jcajce.provider.asymmetric.util.ExtendedInvalidKeySpecException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,7 +25,13 @@ import java.util.concurrent.TimeUnit;
 
 public class ResourcesPage extends HomePage{
 
-	WebElement element;
+	private Actions action;
+	private WebElement element;
+	
+	public ResourcesPage(WebDriver driver) {
+		super(driver);
+		action = new Actions(driver);
+	}
 	
 	/**
 	 * Method to select the Add tab
@@ -32,12 +39,12 @@ public class ResourcesPage extends HomePage{
 	 */
 	public AddResourcesPage AddResource()
 	{
-		Waiters.WaitByXPath("//div/div/button");
+		Waiters.WaitByXPath("//div/div/button", driver);
 		
-		WebElement element = BrowserManager.getInstance().getBrowser().findElement(By.xpath("//div/div/button"));
+		WebElement element = driver.findElement(By.xpath("//div/div/button"));
 		element.click();
 	    
-		return new AddResourcesPage();
+		return new AddResourcesPage(driver);
 	}
 	
 	/**
@@ -46,7 +53,7 @@ public class ResourcesPage extends HomePage{
 	 */
 	public ResourcesPage SelectResource()
 	{
-		Waiters.WaitByCss("input.ngSelectionCheckbox");
+		Waiters.WaitByCss("input.ngSelectionCheckbox", driver);
 		
 		WebElement checkbox;
 		List<WebElement> list = GetListResources();
@@ -69,7 +76,7 @@ public class ResourcesPage extends HomePage{
 				.findElement(By.id("btnRemove"));
 		element.click();
 		
-		return new DeleteResourcesPage();
+		return new DeleteResourcesPage(driver);
 	}
 	
 	/**
@@ -81,10 +88,10 @@ public class ResourcesPage extends HomePage{
 		List<WebElement> list = GetListResources();
 		element = list.get(list.size()-1);
 		
-		Actions action = new Actions(BrowserManager.getInstance().getBrowser());
+		Actions action = new Actions(driver);
 		action.moveToElement(element.findElement(By.cssSelector("div.ng-scope > span.ng-binding"))).doubleClick().build().perform();
 		
-		return new AddResourcesPage();
+		return new AddResourcesPage(driver);
 	}
 	
 	/**
@@ -96,10 +103,7 @@ public class ResourcesPage extends HomePage{
 		WebElement element2;
 		WebElement element3;
 		
-		element = BrowserManager
-				.getInstance()
-				.getBrowser()
-				.findElement(By.id("resourcesGrid"));		
+		element = driver.findElement(By.id("resourcesGrid"));		
 		
 		element2 = element.findElement(By.xpath("div[2]"));
 		element3 = element2.findElement(By.tagName("div"));
@@ -141,7 +145,7 @@ public class ResourcesPage extends HomePage{
 		
 		Assert.assertEquals(expName, name);
 		Assert.assertEquals(expDisplayName, displayName);
-		
+		System.out.println("Verifycation done");
 		return this;
 	}
 	

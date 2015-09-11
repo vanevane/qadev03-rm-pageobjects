@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Email Server Test Cases">
-  <test name="Remove an Email Server">
-    <classes>
-      <class name="tests.EmailServersTestCases"/>
-    </classes>
-  </test> <!-- Test -->
-  <test name="Add an Email Server">
-    <classes>
-      <class name="tests.EmailServersTestCases"/>
-    </classes>
-  </test> <!-- Test -->
+<suite name="Resources Test Cases">
+<parameter name="appURL" value="http://172.20.208.79:4040/admin/#/admin"/>
+<parameter name="browserType" value="firefox"/>
+	<test name="Create Resource">
+	  	<classes>
+	    	<class name="tests.CreateResource">
+	 		</class>
+	  	</classes>
+ 	</test> <!-- Test -->
+  
+
+  
 </suite> <!-- Suite -->

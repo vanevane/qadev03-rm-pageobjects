@@ -12,48 +12,12 @@ import java.util.Properties;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
 
-public class ResourcesTest {
+public class ResourcesTest extends BaseTest{
 	Properties settings = ReadPropertyValues
 			.getPropertyFile("./config/settings.properties");
 	String username = settings.getProperty("username");
 	String password = settings.getProperty("password");
 
-	@Test
-	public void CreateResource()
-	{
-//		String username = "rmdom2008\\room.manager";
-//		String password = "M@nager";
-		String name = "newResource";
-		String displayName = "newResource";
-		String id = "";
-		
-		StartTest.getLogin()
-		.setUsername(username)
-		.setPassword(password)
-		.login()
-		.SelectResourcesOption()
-		.AddResource()
-		.setName(name)
-		.setDisplayName(displayName)
-		.Save()
-		.VerifyResourceWasCreated(name, displayName)
-		.SingOut();
-
-		//Postconditions
-//		try {
-//			ArrayList<JSONObject> resources = ResourcesRequests.getResources();
-//			for (JSONObject object : resources) {
-//				if(object.get("name").toString().equals(name))
-//					id = object.get("_id").toString();
-//			}
-//			ResourcesRequests.deleteResource(id);
-//			BrowserManager.getInstance().getBrowser().quit();
-//		
-//		} catch (UnsupportedOperationException | IOException e) {
-//			e.printStackTrace();
-//		}
-	}
-	
 	public void UpdateResourceName()
 	{
 		//Preconditions
@@ -95,8 +59,10 @@ public class ResourcesTest {
 		BrowserManager.getInstance().getBrowser().quit();
 	}
 	
+	@Test
 	public void DeleteResource()
 	{
+		System.out.println("Enter Delete Resource Test Case");
 //		String username = "rmdom2008\\room.manager";
 //		String password = "M@nager";
 		String name = "newResource";
@@ -116,11 +82,11 @@ public class ResourcesTest {
 //		BrowserManager.getInstance().getBrowser().quit();	
 	}
 	
-	public static void main(String[] args) {
-		ResourcesTest main = new ResourcesTest();		
-		main.CreateResource();
-		main.DeleteResource();
-//		main.UpdateResourceName();
-	}
+//	public static void main(String[] args) {
+//		ResourcesTest main = new ResourcesTest();		
+////		main.CreateResource();
+////		main.DeleteResource();
+////		main.UpdateResourceName();
+//	}
 
 }
